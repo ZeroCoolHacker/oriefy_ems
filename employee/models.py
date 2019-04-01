@@ -19,7 +19,7 @@ class Employee(models.Model):
     picture             = models.ImageField('Profile Picture', upload_to=user_directory_path)
     temporary_address   = models.CharField('Temporary Address', max_length=200)
     permanent_address   = models.CharField('Permanent Address', max_length=200)
-    linkedin_url        = models.URLField('Linkdin URL', max_length=60)
+    linkdin_url        = models.URLField('Linkdin URL', max_length=60)
     facebook_url        = models.URLField('Facebook URL', max_length=60, blank=True)
     github_url          = models.URLField('Github URL', max_length=60, blank=True)
     #Guardian
