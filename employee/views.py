@@ -1,14 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.views.generic import CreateView, DetailView
 from employee.models import Employee
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from employee.forms import BasicEmployeeCreateForm
 
 
 # Create your views here.
-class EmployeeCreateView(LoginRequiredMixin, CreateView):
+class EmployeeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """
     View that creates an employee entry
     """
@@ -17,6 +17,14 @@ class EmployeeCreateView(LoginRequiredMixin, CreateView):
     message = 'Basic Information Complete'
     form_class = BasicEmployeeCreateForm
     model = Employee
+
+
+    def test_func(self):
+        if Employee.objects.filter(user=self.request.user).count() is not 0:
+            return False
+        else:
+            return True
+    
 
     def form_valid(self, form):
         form.instance.user = self.request.user
