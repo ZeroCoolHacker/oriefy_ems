@@ -26,6 +26,9 @@ class Employee(models.Model):
     father_name         = models.CharField(max_length=50)
     father_cnic         = models.CharField(max_length=13)
     fathers_phone_no    = models.CharField(max_length=11, default="0000000")
+
+    #verification
+    verified            = models.BooleanField('Verified', default=False)
     
 
 
@@ -78,3 +81,11 @@ class RecordImage(models.Model):
     employee        = models.ForeignKey(Employee, on_delete=models.CASCADE)
     category        = models.CharField(max_length=15, choices=RecordCategoryChoices)
     image           = models.ImageField('Document Photo', upload_to=employee_certificates_path)
+
+
+class PhoneNumber(models.Model):
+    """
+    Saves phone numbers of users
+    """
+    person      = models.ForeignKey(User, on_delete=models.CASCADE)
+    number      = models.CharField(max_length=12)
